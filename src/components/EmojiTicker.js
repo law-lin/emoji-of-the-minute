@@ -36,8 +36,8 @@ function EmojiTicker() {
   const Emojis = ({ emojis }) => (
     <>
       {emojis.map((emoji) => (
-        <>
-          <Emoji key={emoji.name} name={emoji.name} width={48} />
+        <React.Fragment key={emoji.name}>
+          <Emoji name={emoji.name} width={48} />
           <div
             style={{
               verticalAlign: "top",
@@ -66,7 +66,7 @@ function EmojiTicker() {
               </>
             )}
           </div>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
