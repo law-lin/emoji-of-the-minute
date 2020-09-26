@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Ticker from "react-ticker";
 import Emoji from "react-apple-emojis";
 import upvote from "../images/upvote.png";
 import downvote from "../images/downvote.png";
-import { Avatar } from "antd";
+import { getEmojis } from "./Firebase/firebase";
 
 function EmojiTicker() {
-  let emojis = [
-    { name: "cold-face", upvotes: 5, downvotes: 10 },
-    { name: "face-with-tears-of-joy", upvotes: 10, downvotes: 5 },
-    { name: "pig-face", upvotes: 15, downvotes: 1 },
-    { name: "clown-face", upvotes: 22, downvotes: 6 },
-    { name: "face-with-symbols-on-mouth", upvotes: 31, downvotes: 10 },
-  ];
+  const [emojis, setEmojis] = useState([]);
+
+  useEffect(() => {
+    getEmojis()
+      .get()
+      .then((querySnapshot) => {
+        let emojiList = [];
+        querySnapshot.forEach((doc) => {
+          let emoji = {
+            name: doc.data().name,
+            upvotes: doc.data().upvotes,
+            downvotes: doc.data().downvotes,
+          };
+          emojiList.push(emoji);
+        });
+        setEmojis(emojiList);
+      });
+  }, []);
+
+  // let emojis = [
+  //   { name: "cold-face", upvotes: 5, downvotes: 10 },
+  //   { name: "face-with-tears-of-joy", upvotes: 10, downvotes: 5 },
+  //   { name: "pig-face", upvotes: 15, downvotes: 1 },
+  //   { name: "clown-face", upvotes: 22, downvotes: 6 },
+  //   { name: "face-with-symbols-on-mouth", upvotes: 31, downvotes: 10 },
+  // ];
 
   const Emojis = ({ emojis }) => (
     <>
@@ -29,7 +48,7 @@ function EmojiTicker() {
           >
             {emoji.upvotes - emoji.downvotes > 0 ? (
               <>
-                <img style={{ width: "20px" }} src={upvote} />
+                <img style={{ width: "20px" }} src={upvote} alt="upvote" />
                 <span
                   style={{ color: "white", margin: "0 20px", display: "block" }}
                 >
@@ -38,7 +57,7 @@ function EmojiTicker() {
               </>
             ) : (
               <>
-                <img style={{ width: "20px" }} src={downvote} />
+                <img style={{ width: "20px" }} src={downvote} alt="downvote" />
                 <span
                   style={{ color: "white", margin: "0 20px", display: "block" }}
                 >
