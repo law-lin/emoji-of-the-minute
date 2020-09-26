@@ -16,3 +16,47 @@ const db = firebase.firestore();
 export const getEmojis = () => {
   return db.collection("emojis");
 };
+
+export const upvoteEmoji = (name) => {
+  db.collection("emojis")
+    .doc(name)
+    .set({
+      name,
+      upvotes: firebase.firestore.FieldValue.increment(1),
+      downvotes: firebase.firestore.FieldValue.increment(0),
+      netVotes: firebase.firestore.FieldValue.increment(1),
+    });
+};
+
+export const unUpvoteEmoji = (name) => {
+  db.collection("emojis")
+    .doc(name)
+    .set({
+      name,
+      upvotes: firebase.firestore.FieldValue.increment(-1),
+      downvotes: firebase.firestore.FieldValue.increment(0),
+      netVotes: firebase.firestore.FieldValue.increment(-1),
+    });
+};
+
+export const downvoteEmoji = (name) => {
+  db.collection("emojis")
+    .doc(name)
+    .set({
+      name,
+      upvotes: firebase.firestore.FieldValue.increment(0),
+      downvotes: firebase.firestore.FieldValue.increment(1),
+      netVotes: firebase.firestore.FieldValue.increment(-1),
+    });
+};
+
+export const unDownvoteEmoji = (name) => {
+  db.collection("emojis")
+    .doc(name)
+    .set({
+      name,
+      upvotes: firebase.firestore.FieldValue.increment(0),
+      downvotes: firebase.firestore.FieldValue.increment(-1),
+      netVotes: firebase.firestore.FieldValue.increment(1),
+    });
+};

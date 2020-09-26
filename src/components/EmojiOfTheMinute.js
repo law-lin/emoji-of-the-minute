@@ -5,12 +5,12 @@ import { getEmojis } from "./Firebase/firebase";
 function EmojiOfTheMinute() {
   const [name, setName] = useState("");
 
+  // change onSnapshot to .get().then() once 60 second interval function is implemented
   useEffect(() => {
     getEmojis()
-      .orderBy("upvotes", "desc")
+      .orderBy("netVotes", "desc")
       .limit(1)
-      .get()
-      .then((querySnapshot) => {
+      .onSnapshot((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           setName(doc.data().name);
         });
@@ -22,7 +22,7 @@ function EmojiOfTheMinute() {
       <Emoji
         style={{ margin: "0 auto", display: "block" }}
         name={name}
-        width={350}
+        width={250}
       />
     </>
   );

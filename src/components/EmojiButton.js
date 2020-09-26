@@ -1,95 +1,88 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from "react";
+import Emoji from "react-apple-emojis";
+import { Popconfirm, message } from "antd";
+import "antd/dist/antd.css";
+import {
+  downvoteEmoji,
+  unDownvoteEmoji,
+  unUpvoteEmoji,
+  upvoteEmoji,
+} from "./Firebase/firebase";
 
-import { Popconfirm, message } from "antd"
-import "antd/dist/antd.css"
-import styled from 'styled-components';
-import Emoji from 'react-apple-emojis'
+function EmojiButton(props) {
+  const [name, setName] = useState(props.name);
+  const [upvote, setUpvote] = useState(false);
+  const [downvote, setDownvote] = useState(false);
 
-class EmojiButton extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: this.props.name,
-            upvote: false,
-            downvoate: false,
-            numvote: 0,
-        }
+  const emojiStyle = {
+    padding: "5px",
+    zIndex: "0",
+  };
+
+  const onUpvoteClick = () => {
+    if (upvote === false) {
+      setUpvote(true);
+      upvoteEmoji(name);
+      message.success("Upvoted emoji");
+    } else if (downvote === true) {
+      setUpvote(true);
+      upvoteEmoji(name);
+      message.success("Upvoted emoji");
+    } else {
+      setUpvote(false);
+      unUpvoteEmoji(name);
+      message.success("Undid upvoted emoji");
     }
+  };
 
-    render() { 
-        const emojiStyle = {
-            height: "30px",
-            width: "30px",
-            padding: "5px",
-            zIndex: "0"
-        }
-
-        let boxStyle = {
-            border: "2px solid black",
-            height: "20px",
-            width: "20px",
-        }
-
-        let upvote = () => {
-            if(this.state.upvote === false)
-            {
-                this.setState({numvote: this.state.numvote + 1})
-                this.setState({upvote: true})
-                message.success('Upvoted emoji')
-            }
-            else if (this.state.downvote === true)
-            {
-                this.setState({numvote: this.state.numvote + 2})
-                this.setState({upvote: true})
-                message.success('Upvoted emoji')
-            }
-            else
-            {
-                this.setState({numvote: this.state.numvote - 1})
-                this.setState({upvote: false})
-                message.success('Undid upvoted emoji')
-            }
-        }
-
-        let downvote = () => {
-            if(this.state.downvote === false)
-            {
-                this.setState({numvote: this.state.numvote - 1})
-                this.setState({downvote: true})
-                message.success('Downvoted emoji')
-            }
-            else if (this.state.upvote === true)
-            {
-                this.setState({numvote: this.state.numvote - 2})
-                this.setState({downvote: true})
-                message.success('Downvoted emoji')
-            }
-            else
-            {
-                this.setState({numvote: this.state.numvote + 1})
-                this.setState({downvote: false})
-                message.success('Undid downvoted emoji')
-            }
-        }
-
-        return ( 
-            <span>
-                <Popconfirm
-                    title = "Vote for this emoji?" 
-                    okText = "Thumbs up"
-                    cancelText = "Thumbs Down"
-                    onConfirm = {upvote}
-                    onCancel = {downvote}
-                >
-                    <Emoji 
-                    name = {this.state.name}
-                    style = {emojiStyle}
-                    />
-                </Popconfirm>
-            </span>
-         );
+  const onDownvoteClick = () => {
+    if (downvote === false) {
+      setDownvote(true);
+      downvoteEmoji(name);
+      message.success("Downvoted emoji");
+    } else if (upvote === true) {
+      setDownvote(true);
+      downvoteEmoji(name);
+      message.success("Downvoted emoji");
+    } else {
+      setDownvote(false);
+      unDownvoteEmoji(name);
+      message.success("Undid downvoted emoji");
     }
+  };
+
+  let thumbsUp = <Emoji name="thumbs-up" width={24} />;
+  let thumbsDown = <Emoji name="thumbs-down" width={24} />;
+  let thumbsUpStyle = {
+    backgroundColor: "#42FF00",
+    borderRadius: "15px",
+    border: "none",
+    height: "30px",
+    width: "70px",
+  };
+  let thumbsDownStyle = {
+    backgroundColor: "#FF0000",
+    borderRadius: "15px",
+    border: "none",
+    height: "30px",
+    width: "70px",
+  };
+  return (
+    <span>
+      <Popconfirm
+        title="Vote for this emoji?"
+        onConfirm={onUpvoteClick}
+        onCancel={onDownvoteClick}
+        okText=" "
+        cancelText=" "
+        okButtonProps={{ icon: thumbsUp, style: thumbsUpStyle }}
+        cancelButtonProps={{ icon: thumbsDown, style: thumbsDownStyle }}
+        icon={<Emoji name={name} width={24} />}
+      >
+        <Emoji name={name} style={emojiStyle} width={48} />
+      </Popconfirm>
+    </span>
+  );
 }
- 
+
 export default EmojiButton;

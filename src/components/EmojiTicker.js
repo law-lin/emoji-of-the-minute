@@ -9,30 +9,21 @@ function EmojiTicker() {
   const [emojis, setEmojis] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getEmojis()
-      .get()
-      .then((querySnapshot) => {
-        let emojiList = [];
-        querySnapshot.forEach((doc) => {
-          let emoji = {
-            name: doc.data().name,
-            upvotes: doc.data().upvotes,
-            downvotes: doc.data().downvotes,
-          };
-          emojiList.push(emoji);
-        });
-        setEmojis(emojiList);
-        setLoading(false);
+    getEmojis().onSnapshot((querySnapshot) => {
+      let emojiList = [];
+      querySnapshot.forEach((doc) => {
+        let emoji = {
+          name: doc.data().name,
+          upvotes: doc.data().upvotes,
+          downvotes: doc.data().downvotes,
+        };
+        emojiList.push(emoji);
       });
+      setEmojis(emojiList);
+      setLoading(false);
+    });
   }, []);
 
-  // let emojis = [
-  //   { name: "cold-face", upvotes: 5, downvotes: 10 },
-  //   { name: "face-with-tears-of-joy", upvotes: 10, downvotes: 5 },
-  //   { name: "pig-face", upvotes: 15, downvotes: 1 },
-  //   { name: "clown-face", upvotes: 22, downvotes: 6 },
-  //   { name: "face-with-symbols-on-mouth", upvotes: 31, downvotes: 10 },
-  // ];
   console.log(emojis);
   const Emojis = ({ emojis }) => (
     <>
