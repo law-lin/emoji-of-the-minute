@@ -1,6 +1,7 @@
 import React from "react";
 import EmojiTicker from "./EmojiTicker";
 import EmojiOfTheMinute from "./EmojiOfTheMinute";
+import CountdownTimer from "./CountdownTimer";
 
 function HomePage() {
   return (
@@ -8,6 +9,7 @@ function HomePage() {
       <EmojiTicker />
       <h1 style={{ textAlign: "center" }}>Emoji of the Minute</h1>
       <EmojiOfTheMinute />
+      <CountdownTimer />
     </div>
   );
 }

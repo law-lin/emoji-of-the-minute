@@ -16,12 +16,15 @@ function EmojiOfTheMinute() {
         });
       });
   }, []);
+
   return (
-    <Emoji
-      style={{ margin: "0 auto", display: "block" }}
-      name={name}
-      width={350}
-    />
+    <>
+      <Emoji
+        style={{ margin: "0 auto", display: "block" }}
+        name={name}
+        width={350}
+      />
+    </>
   );
 }
 

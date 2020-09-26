@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import Countdown from "react-countdown";
 
 function CountdownTimer() {
-  const [date, setDate] = useState(Date.now() + 60000);
+  const [now, setNow] = useState("");
 
-  const renderer = ({ seconds, completed }) => {
-    if (completed) {
-      setDate(Date.now() + 60000);
-    }
-  };
+  function sixtySeconds() {
+    var timer = function () {
+      var now = 1000 * Math.floor(Date.now() / 1000 + 0.1);
+      setNow(Date(now).toString());
+      setTimeout(timer, now + 1000 - Date.now());
+    };
+    timer();
+  }
+  setTimeout(sixtySeconds, 500);
   return (
     <div>
-      <Countdown date={date} renderer={renderer} />
+      <p>time is: {now}</p>
     </div>
   );
 }

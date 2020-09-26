@@ -7,7 +7,7 @@ import { getEmojis } from "./Firebase/firebase";
 
 function EmojiTicker() {
   const [emojis, setEmojis] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getEmojis()
       .get()
@@ -22,6 +22,7 @@ function EmojiTicker() {
           emojiList.push(emoji);
         });
         setEmojis(emojiList);
+        setLoading(false);
       });
   }, []);
 
@@ -32,7 +33,7 @@ function EmojiTicker() {
   //   { name: "clown-face", upvotes: 22, downvotes: 6 },
   //   { name: "face-with-symbols-on-mouth", upvotes: 31, downvotes: 10 },
   // ];
-
+  console.log(emojis);
   const Emojis = ({ emojis }) => (
     <>
       {emojis.map((emoji) => (
@@ -73,13 +74,15 @@ function EmojiTicker() {
 
   return (
     <div style={{ backgroundColor: "black", padding: "10px" }}>
-      <Ticker
-        direction="toRight"
-        speed={10}
-        style={{ backgroundColor: "black" }}
-      >
-        {() => <Emojis emojis={emojis} />}
-      </Ticker>
+      {!loading && (
+        <Ticker
+          direction="toRight"
+          speed={10}
+          style={{ backgroundColor: "black" }}
+        >
+          {() => <Emojis emojis={emojis} />}
+        </Ticker>
+      )}
     </div>
   );
 }
