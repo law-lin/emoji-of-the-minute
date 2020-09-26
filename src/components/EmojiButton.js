@@ -10,7 +10,6 @@ import {
 } from "./Firebase/firebase";
 
 function EmojiButton(props) {
-  const [name, setName] = useState(props.name);
   const [upvote, setUpvote] = useState(false);
   const [downvote, setDownvote] = useState(false);
 
@@ -22,15 +21,15 @@ function EmojiButton(props) {
   const onUpvoteClick = () => {
     if (upvote === false) {
       setUpvote(true);
-      upvoteEmoji(name);
+      upvoteEmoji(props.name);
       message.success("Upvoted emoji");
     } else if (downvote === true) {
       setUpvote(true);
-      upvoteEmoji(name);
+      upvoteEmoji(props.name);
       message.success("Upvoted emoji");
     } else {
       setUpvote(false);
-      unUpvoteEmoji(name);
+      unUpvoteEmoji(props.name);
       message.success("Undid upvoted emoji");
     }
   };
@@ -38,15 +37,15 @@ function EmojiButton(props) {
   const onDownvoteClick = () => {
     if (downvote === false) {
       setDownvote(true);
-      downvoteEmoji(name);
+      downvoteEmoji(props.name);
       message.success("Downvoted emoji");
     } else if (upvote === true) {
       setDownvote(true);
-      downvoteEmoji(name);
+      downvoteEmoji(props.name);
       message.success("Downvoted emoji");
     } else {
       setDownvote(false);
-      unDownvoteEmoji(name);
+      unDownvoteEmoji(props.name);
       message.success("Undid downvoted emoji");
     }
   };
@@ -77,9 +76,9 @@ function EmojiButton(props) {
         cancelText=" "
         okButtonProps={{ icon: thumbsUp, style: thumbsUpStyle }}
         cancelButtonProps={{ icon: thumbsDown, style: thumbsDownStyle }}
-        icon={<Emoji name={name} width={24} />}
+        icon={<Emoji name={props.name} width={24} />}
       >
-        <Emoji name={name} style={emojiStyle} width={48} />
+        <Emoji name={props.name} style={emojiStyle} width={48} />
       </Popconfirm>
     </span>
   );

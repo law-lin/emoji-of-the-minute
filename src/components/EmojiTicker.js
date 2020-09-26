@@ -16,15 +16,16 @@ function EmojiTicker() {
           name: doc.data().name,
           upvotes: doc.data().upvotes,
           downvotes: doc.data().downvotes,
+          netVotes: doc.data().netVotes,
         };
         emojiList.push(emoji);
       });
+      emojiList = emojiList.slice(0, 11);
       setEmojis(emojiList);
       setLoading(false);
     });
   }, []);
 
-  console.log(emojis);
   const Emojis = ({ emojis }) => (
     <>
       {emojis.map((emoji) => (

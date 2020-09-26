@@ -1,21 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Emoji from "react-apple-emojis";
-import { getEmojis } from "./Firebase/firebase";
-
+import { resetVotes } from "./Firebase/firebase";
 function EmojiOfTheMinute() {
   const [name, setName] = useState("");
-
-  // change onSnapshot to .get().then() once 60 second interval function is implemented
+  const [seconds, setSeconds] = useState(null);
   useEffect(() => {
-    getEmojis()
-      .orderBy("netVotes", "desc")
-      .limit(1)
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setName(doc.data().name);
+    if (name === "") {
+      fetch(
+        "https://us-central1-emoji-for-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
+      )
+        .then((response) => response.json())
+        .then((jsonData) => {
+          setName(jsonData.name);
+          sixtySeconds();
         });
-      });
-  }, []);
+    }
+  }, [name]);
+
+  function sixtySeconds() {
+    var timer = function () {
+      var now = 1000 * Math.floor(Date.now() / 1000 + 0.1);
+      var d = new Date();
+      const seconds = 59 - d.getSeconds();
+
+      console.log(seconds);
+      if (seconds === 0) {
+        fetch(
+          "https://us-central1-emoji-for-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
+        )
+          .then((response) => response.json())
+          .then((jsonData) => {
+            setName(jsonData.name);
+            resetVotes();
+          });
+      }
+      setTimeout(timer, now + 1000 - Date.now());
+    };
+    timer();
+  }
 
   return (
     <>

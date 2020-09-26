@@ -7,6 +7,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.6.5",
+    "axios": "^0.20.0",
+    "cors": "^2.8.5",
     "firebase": "^7.21.1",
     "react": "^16.13.1",
     "react-apple-emojis": "^1.1.0",
