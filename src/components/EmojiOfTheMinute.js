@@ -7,7 +7,7 @@ function EmojiOfTheMinute() {
   useEffect(() => {
     if (name === "") {
       fetch(
-        "https://us-central1-emoji-for-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
+        "https://us-central1-emoji-of-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
       )
         .then((response) => response.json())
         .then((jsonData) => {
@@ -26,7 +26,7 @@ function EmojiOfTheMinute() {
       console.log(seconds);
       if (seconds === 0) {
         fetch(
-          "https://us-central1-emoji-for-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
+          "https://us-central1-emoji-of-the-minute.cloudfunctions.net/updateEmojiOfTheMinute"
         )
           .then((response) => response.json())
           .then((jsonData) => {
