@@ -1,6 +1,7 @@
 # Emoji of the Minute
 
-Check it out [here](https://minutemoji.online/)
+Check it out [here](https://minutemoji.online/)!
+
 ## Inspiration
 We wanted to create a way for people to humanly interact with a site and impact it in a fun way. Everyone's vote matters!
 
