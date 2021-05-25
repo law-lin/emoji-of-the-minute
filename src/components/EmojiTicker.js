@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Ticker from "react-ticker";
-import Emoji from "react-apple-emojis";
-import upvote from "../images/upvote.png";
-import downvote from "../images/downvote.png";
-import { getEmojis } from "./Firebase/firebase";
+import React, { useState, useEffect } from 'react';
+import Ticker from 'react-ticker';
+import Emoji from 'react-apple-emojis';
+import upvote from '../images/upvote.png';
+import downvote from '../images/downvote.png';
+import { getEmojis } from './Firebase/firebase';
 
 function EmojiTicker() {
   const [emojis, setEmojis] = useState([]);
@@ -25,7 +25,7 @@ function EmojiTicker() {
       setLoading(false);
     });
   }, []);
-
+  console.log(loading);
   const Emojis = ({ emojis }) => (
     <>
       {emojis.map((emoji) => (
@@ -33,26 +33,26 @@ function EmojiTicker() {
           <Emoji name={emoji.name} width={48} />
           <div
             style={{
-              verticalAlign: "top",
-              display: "inline-block",
-              textAlign: "center",
-              marginRight: "50px",
+              verticalAlign: 'top',
+              display: 'inline-block',
+              textAlign: 'center',
+              marginRight: '50px',
             }}
           >
             {emoji.upvotes - emoji.downvotes > 0 ? (
               <>
-                <img style={{ width: "20px" }} src={upvote} alt="upvote" />
+                <img style={{ width: '20px' }} src={upvote} alt='upvote' />
                 <span
-                  style={{ color: "white", margin: "0 20px", display: "block" }}
+                  style={{ color: 'white', margin: '0 20px', display: 'block' }}
                 >
                   {Math.abs(emoji.upvotes - emoji.downvotes)}
                 </span>
               </>
             ) : (
               <>
-                <img style={{ width: "20px" }} src={downvote} alt="downvote" />
+                <img style={{ width: '20px' }} src={downvote} alt='downvote' />
                 <span
-                  style={{ color: "white", margin: "0 20px", display: "block" }}
+                  style={{ color: 'white', margin: '0 20px', display: 'block' }}
                 >
                   {Math.abs(emoji.upvotes - emoji.downvotes)}
                 </span>
@@ -65,12 +65,13 @@ function EmojiTicker() {
   );
 
   return (
-    <div style={{ backgroundColor: "black", padding: "10px" }}>
+    <div style={{ backgroundColor: 'black', padding: '10px' }}>
       {!loading && (
         <Ticker
-          direction="toRight"
+          direction='toRight'
           speed={10}
-          style={{ backgroundColor: "black" }}
+          style={{ backgroundColor: 'black' }}
+          height='48'
         >
           {() => <Emojis emojis={emojis} />}
         </Ticker>
